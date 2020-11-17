@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
 import Notification from './components/Notification'
+import CreateBlog from './components/CreateBlog'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -22,12 +23,23 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
   const handleLogout = () => (
     window.localStorage.removeItem('loggedBlogappUser')
   )
+
+  const createNewBlog = ( title, author, url ) => {
+    const newBlog = {
+      title: title,
+      author: author,
+      url: url,
+    }
+
+    blogService.create(newBlog)
+  }
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -89,6 +101,7 @@ const App = () => {
       <div>
         <p>{user.name} logged in</p>
         <button onClick={handleLogout}>Logout</button>
+        <CreateBlog createNewBlog={createNewBlog}></CreateBlog>
       </div>
     }
 
