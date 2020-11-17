@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -16,17 +17,17 @@ const App = () => {
     )  
   }, [])
 
-  const Notification = ({ message }) => {
-    if (message === null) {
-      return null
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
     }
-  
-    return (
-      <div className="error">
-        {message}
-      </div>
-    )
-  }
+  }, [])
+
+  const handleLogout = () => (
+    window.localStorage.removeItem('loggedBlogappUser')
+  )
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -61,6 +62,11 @@ const App = () => {
       const user = await loginService.login({
         username, password,
       })
+
+      window.localStorage.setItem(
+        'loggedBlogappUser', JSON.stringify(user)
+      )
+
       setUser(user)
       setUsername('')
       setPassword('')
@@ -82,6 +88,7 @@ const App = () => {
       loginForm() :
       <div>
         <p>{user.name} logged in</p>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     }
 
