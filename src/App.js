@@ -11,6 +11,8 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [ errorMessage, setErrorMessage ] = useState('')
   const [user, setUser] = useState(null)
+  const [ successfulBlogCreate, setSuccessfulBlogCreate ] = useState(false)
+  const [ unsuccessfulBlogCreate, setUnsuccessfulBlogCreate ] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -38,7 +40,8 @@ const App = () => {
       url: url,
     }
 
-    blogService.create(newBlog)
+    const success = blogService.create(newBlog)
+    success ? setSuccessfulBlogCreate(true) : setUnsuccessfulBlogCreate(true)
   }
 
   const loginForm = () => (
@@ -102,6 +105,8 @@ const App = () => {
         <p>{user.name} logged in</p>
         <button onClick={handleLogout}>Logout</button>
         <CreateBlog createNewBlog={createNewBlog}></CreateBlog>
+        {successfulBlogCreate && <h1>Blogin lisääminen onnistui!</h1>}
+        {unsuccessfulBlogCreate && <h1>Blogin lisääminen epäonnistui!</h1>}
       </div>
     }
 
