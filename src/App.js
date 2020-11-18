@@ -86,6 +86,10 @@ const App = () => {
   
       blogService.put(newBlog, id)
     }
+
+    const removeBlog = (id) => {
+      blogService.remove(id)
+    }
     
   return (
     <div>
@@ -114,7 +118,7 @@ const App = () => {
       <div>
       <button onClick={showAllBlogInformation}>Show less</button>,
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <FullBlog key={blog.id} title={blog.title} author={blog.author} url={blog.url} likes={blog.likes} id={blog.id} likeMethod={like}/>
+        <FullBlog key={blog.id} title={blog.title} author={blog.author} url={blog.url} likes={blog.likes} id={blog.id} likeMethod={like} removeBlogMethod={removeBlog}/>
       )}
       </div>}
     </div>

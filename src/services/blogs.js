@@ -42,4 +42,19 @@ const put = async ( oldObject, id ) => {
     }
 }
 
-export default { getAll, setToken, create, put }
+const remove = async (id) => {
+  try {
+    const config = {
+      headers: { Authorization: token },
+    }
+
+    await axios.delete(baseUrl + '/' + id, config)
+    return true
+  }
+  catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
+export default { getAll, setToken, create, put, remove }
