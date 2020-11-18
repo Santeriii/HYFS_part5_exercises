@@ -6,6 +6,7 @@ import Notification from './components/Notification'
 import CreateBlog from './components/CreateBlog'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
+import FullBlog from './components/FullBlog'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -15,6 +16,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [ successfulBlogCreate, setSuccessfulBlogCreate ] = useState(false)
   const [ unsuccessfulBlogCreate, setUnsuccessfulBlogCreate ] = useState(false)
+  const [ fullBlogInformation, setFullBlogInformation ] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -69,6 +71,9 @@ const App = () => {
       }, 5000)
     }
     }
+    const showAllBlogInformation = () => {
+      setFullBlogInformation(!fullBlogInformation)
+    }
     
   return (
     <div>
@@ -86,10 +91,20 @@ const App = () => {
         {unsuccessfulBlogCreate && <h1>Blogin lisääminen epäonnistui!</h1>}
       </div>
     }
-
+      {!fullBlogInformation &&
+      <div>
+        <button onClick={showAllBlogInformation}>Show more</button>
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} />
+        )}
+      </div>}
+      {fullBlogInformation &&
+      <div>
+      <button onClick={showAllBlogInformation}>Show less</button>,
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <FullBlog key={blog.id} blog={blog} />
       )}
+      </div>}
     </div>
   )
 }
