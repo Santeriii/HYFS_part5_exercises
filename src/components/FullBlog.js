@@ -1,8 +1,17 @@
 import React from 'react'
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author} {blog.url} {blog.likes}
-  </div>
-)
 
-export default Blog
+const FullBlog = ({ title, author, url, likes, id, likeMethod }) => {
+
+  const like = () => {
+      likeMethod(title, author, url, id)
+  }
+
+  return (
+    <form onSubmit={like}>
+      <div>{title} {author} {url} {likes}</div>
+      <button type="submit">like</button>
+    </form>
+  )
+  }
+
+export default FullBlog

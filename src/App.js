@@ -71,8 +71,20 @@ const App = () => {
       }, 5000)
     }
     }
+
     const showAllBlogInformation = () => {
       setFullBlogInformation(!fullBlogInformation)
+    }
+
+    const like = ( title, author, url, id ) => {
+      const newBlog = {
+        title: title,
+        author: author,
+        url: url,
+        likes: 5,
+      }
+  
+      blogService.put(newBlog, id)
     }
     
   return (
@@ -102,7 +114,7 @@ const App = () => {
       <div>
       <button onClick={showAllBlogInformation}>Show less</button>,
       {blogs.map(blog =>
-        <FullBlog key={blog.id} blog={blog} />
+        <FullBlog key={blog.id} title={blog.title} author={blog.author} url={blog.url} likes={blog.likes} id={blog.id} likeMethod={like}/>
       )}
       </div>}
     </div>
