@@ -81,7 +81,7 @@ const App = () => {
       <div>
         <p>{user.name} logged in</p>
         <button onClick={handleLogout}>Logout</button>
-        <CreateBlog createNewBlog={createNewBlog}></CreateBlog>
+        <Togglable buttonLabel="Create new blog"><CreateBlog createNewBlog={createNewBlog}></CreateBlog></Togglable>
         {successfulBlogCreate && <h1>Blogin lisääminen onnistui!</h1>}
         {unsuccessfulBlogCreate && <h1>Blogin lisääminen epäonnistui!</h1>}
       </div>
