@@ -76,12 +76,12 @@ const App = () => {
       setFullBlogInformation(!fullBlogInformation)
     }
 
-    const like = ( title, author, url, id ) => {
+    const like = ( title, author, url, id, likes) => {
       const newBlog = {
         title: title,
         author: author,
         url: url,
-        likes: 5,
+        likes: likes + 1,
       }
   
       blogService.put(newBlog, id)
@@ -113,7 +113,7 @@ const App = () => {
       {fullBlogInformation &&
       <div>
       <button onClick={showAllBlogInformation}>Show less</button>,
-      {blogs.map(blog =>
+      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
         <FullBlog key={blog.id} title={blog.title} author={blog.author} url={blog.url} likes={blog.likes} id={blog.id} likeMethod={like}/>
       )}
       </div>}

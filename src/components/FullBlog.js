@@ -3,7 +3,7 @@ import React from 'react'
 const FullBlog = ({ title, author, url, likes, id, likeMethod }) => {
 
   const like = () => {
-      likeMethod(title, author, url, id)
+      likeMethod(title, author, url, id, likes)
   }
 
   return (
