@@ -1,30 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const FullBlog = ({ title, author, url, likes, id, likeMethod, removeBlogMethod }) => {
+const FullBlog = ({ blog, likeMethod, removeBlogMethod }) => {
 
   const like = () => {
-      likeMethod(title, author, url, id, likes)
+      likeMethod(blog.title, blog.author, blog.url, blog.id, blog.likes)
   }
 
   const removeBlog = () => {
-    removeBlogMethod(id)
+    removeBlogMethod(blog.id)
   }
 
   return (
     <form onSubmit={like}>
-      <div>{title} {author} {url} {likes}</div>
+      <div>
+        <p>Title: {blog.title}</p>
+        <p>author: {blog.author}</p>
+        <p>url: {blog.url}</p>
+        <p>likes</p>
+        </div>
       <button type="submit">like</button><button onClick={removeBlog}>remove</button>
     </form>
   )
 }
 
 FullBlog.propTypes = {
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  likes: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
+  blog: PropTypes.isRequired,
   likeMethod: PropTypes.func.isRequired,
   removeBlogMethod: PropTypes.func.isRequired
 }

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
 import Notification from './components/Notification'
 import CreateBlog from './components/CreateBlog'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
-import FullBlog from './components/FullBlog'
+import Blog from './components/Blog'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -16,12 +15,14 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [ successfulBlogCreate, setSuccessfulBlogCreate ] = useState(false)
   const [ unsuccessfulBlogCreate, setUnsuccessfulBlogCreate ] = useState(false)
-  const [ fullBlogInformation, setFullBlogInformation ] = useState(false)
+
+  const getBlogs = async () => {
+    setBlogs(await blogService.getAll())
+  }
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    getBlogs()
+    console.log(blogs)
   }, [])
 
   useEffect(() => {
@@ -72,19 +73,13 @@ const App = () => {
     }
     }
 
-    const showAllBlogInformation = () => {
-      setFullBlogInformation(!fullBlogInformation)
-    }
-
-    const like = ( title, author, url, id, likes) => {
-      const newBlog = {
-        title: title,
-        author: author,
-        url: url,
-        likes: likes + 1,
-      }
+    const like = ( blogId ) => {
+      const copy = [...blogs]
+      const blogIndex = copy.findIndex(blog => blog.id === blogId)
+      copy[blogIndex].likes += 1
+      setBlogs(copy)
   
-      blogService.put(newBlog, id)
+      blogService.put(copy[blogIndex], blogId)
     }
 
     const removeBlog = (id) => {
@@ -107,20 +102,7 @@ const App = () => {
         {unsuccessfulBlogCreate && <h1>Blogin lisääminen epäonnistui!</h1>}
       </div>
     }
-      {!fullBlogInformation &&
-      <div>
-        <button onClick={showAllBlogInformation}>Show more</button>
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
-      </div>}
-      {fullBlogInformation &&
-      <div>
-      <button onClick={showAllBlogInformation}>Show less</button>,
-      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <FullBlog key={blog.id} title={blog.title} author={blog.author} url={blog.url} likes={blog.likes} id={blog.id} likeMethod={like} removeBlogMethod={removeBlog}/>
-      )}
-      </div>}
+    <Blog blogs={blogs} showButtonLabel='show more' cancelButtonLabel='show less' likeMethod={like} removeMethod={removeBlog} />
     </div>
   )
 }
