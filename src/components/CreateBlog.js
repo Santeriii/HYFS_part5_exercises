@@ -11,9 +11,9 @@ const CreateBlog = ({ createNewBlog }) => {
 
     return (
     <form onSubmit={handleSubmit}>
-        <h1>Title:</h1><input value={title} onChange={({ target }) => setTitle(target.value)}/>
-        <h1>Author:</h1><input value={author} onChange={({ target }) => setAuthor(target.value)}/>
-        <h1>Url:</h1><input value={url} onChange={({ target }) => setUrl(target.value)}/>
+        <h1>Title:</h1><input id='title' value={title} onChange={({ target }) => setTitle(target.value)}/>
+        <h1>Author:</h1><input id='author' value={author} onChange={({ target }) => setAuthor(target.value)}/>
+        <h1>Url:</h1><input id='url' value={url} onChange={({ target }) => setUrl(target.value)}/>
         <button type="submit">submit</button>
     </form>
     )
