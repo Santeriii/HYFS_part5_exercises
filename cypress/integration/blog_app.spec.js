@@ -18,4 +18,13 @@ describe('Blog app', function() {
 
       cy.contains('Testi logged in')
     })
+
+    it('Login fails with false password', function() {
+      cy.contains('Login').click()
+      cy.get('#username').type('testi')
+      cy.get('#password').type('vaara')
+      cy.get('#login-button').click()
+
+      cy.contains('wrong credentials')
+    })
   })
