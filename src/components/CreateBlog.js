@@ -5,7 +5,8 @@ const CreateBlog = ({ createNewBlog }) => {
     const [ author, setAuthor ] = useState('')
     const [ url, setUrl ] = useState('')
 
-    const handleSubmit = () => {
+    const handleSubmit = ( event ) => {
+        event.preventDefault()
         createNewBlog(title, author, url)
     }
 

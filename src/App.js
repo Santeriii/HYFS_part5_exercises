@@ -38,7 +38,7 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
   )
 
-  const createNewBlog = ( title, author, url ) => {
+  const createNewBlog = async ( title, author, url ) => {
     const newBlog = {
       title: title,
       author: author,
@@ -47,6 +47,15 @@ const App = () => {
 
     const success = blogService.create(newBlog)
     success ? setSuccessfulBlogCreate(true) : setUnsuccessfulBlogCreate(true)
+
+    if (success) {
+      setBlogs(blogs.concat(newBlog))
+    }
+
+    setTimeout(() => {
+      setSuccessfulBlogCreate(false)
+      setUnsuccessfulBlogCreate(false)
+    }, 5000)
   }
 
   const handleLogin = async (event) => {
@@ -98,8 +107,8 @@ const App = () => {
         <p>{user.name} logged in</p>
         <button onClick={handleLogout}>Logout</button>
         <Togglable buttonLabel="Create new blog"><CreateBlog createNewBlog={createNewBlog}></CreateBlog></Togglable>
-        {successfulBlogCreate && <h1>Blogin lisääminen onnistui!</h1>}
-        {unsuccessfulBlogCreate && <h1>Blogin lisääminen epäonnistui!</h1>}
+      {successfulBlogCreate && <h1>Blogin lisääminen onnistui!</h1>}
+      {unsuccessfulBlogCreate && <h1>Blogin lisääminen epäonnistui!</h1>}
       </div>
     }
     <Blog blogs={blogs} showButtonLabel='show more' cancelButtonLabel='show less' likeMethod={like} removeMethod={removeBlog} />
