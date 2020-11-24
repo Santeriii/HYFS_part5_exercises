@@ -53,5 +53,16 @@ describe('Blog app', function() {
         cy.contains('Blogin lisääminen onnistui!')
         cy.contains('testi-blogi')
       })
+
+      it.only('and it is possible to like it', function() {
+        cy.contains('Create new blog').click()
+        cy.get('#title').type('testi-blogi')
+        cy.get('#author').type('testi-kayttaja')
+        cy.get('#url').type('testi-url')
+        cy.contains('submit').click()
+        cy.contains('show more').click()
+        cy.get('#like-button').click()
+        cy.get('#likes-count').contains(1)
+      })
     })
   })

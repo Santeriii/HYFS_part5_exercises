@@ -17,9 +17,9 @@ const FullBlog = ({ blog, likeMethod, removeBlogMethod }) => {
         <p>Title: {blog.title}</p>
         <p>author: {blog.author}</p>
         <p>url: {blog.url}</p>
-        <p>likes</p>
+        <p id='likes-count'>likes</p>
         </div>
-      <button type="submit">like</button><button onClick={removeBlog}>remove</button>
+      <button type="submit">like this</button><button onClick={removeBlog}>remove</button>
     </form>
   )
 }

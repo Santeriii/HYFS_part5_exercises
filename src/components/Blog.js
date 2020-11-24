@@ -36,9 +36,9 @@ const Blog = ({ blogs, showButtonLabel, cancelButtonLabel, likeMethod, removeMet
               <p>Title: {blog.title}</p>
               <p>author: {blog.author}</p>
               <p>url: {blog.url}</p>
-              <p>likes: {blog.likes}</p>
+              <p id='likes-count'>likes: {blog.likes}</p>
             </div>
-            <button onClick={() => like(blog)}>like</button><button onClick={() => removeBlog(blog)}>remove</button>
+            <button id='like-button' onClick={() => like(blog)}>like</button><button onClick={() => removeBlog(blog)}>remove</button>
           </div>
         )
       })}
