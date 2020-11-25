@@ -9,6 +9,7 @@ import Blog from './components/Blog'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [blogsCopy, setBlogsCopy] = useState([])
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
   const [ errorMessage, setErrorMessage ] = useState('')
@@ -43,7 +44,6 @@ const App = () => {
       title: title,
       author: author,
       url: url,
-      likes: 0,
     }
 
     const success = blogService.create(newBlog)
@@ -93,6 +93,13 @@ const App = () => {
     }
 
     const removeBlog = (id) => {
+      let index
+      blogs.map(blog => {
+        if (blog.id === id) {
+          index = blogs.indexOf(blog)
+        }
+      })
+      setBlogs(blogs.splice(index + 1, 1))
       blogService.remove(id)
     }
     
